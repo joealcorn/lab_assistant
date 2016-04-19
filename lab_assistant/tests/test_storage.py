@@ -1,12 +1,12 @@
-from lab_assistant.storage.backends.redis import RedisBackend
+from lab_assistant.storage.backends.base import StorageBackend
 from lab_assistant.storage.backends.null import NullBackend
+from lab_assistant.storage.backends.redis import RedisBackend
 from lab_assistant.tests.cases import TestCase
 import lab_assistant
 
 
-class FakeStorage(object):
-    def __init__(self, **kw):
-        self.kwargs = kw
+class FakeStorage(StorageBackend):
+    pass
 
 
 class TestGetStorage(TestCase):

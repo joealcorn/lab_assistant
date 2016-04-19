@@ -3,7 +3,12 @@ class StorageBackend(object):
     This defines the API for storage all storage backends.
     '''
 
-    def __init__(self, **kwargs):
+    def __init__(self, experiment_key, **kwargs):
+        self.experiment_key = experiment_key
+        self.kwargs = kwargs
+        self.validate_kwargs(kwargs)
+
+    def validate_kwargs(self, kwargs):
         return
 
     def get(self, key):

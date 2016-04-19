@@ -12,7 +12,7 @@ __all__ = [
 ]
 
 
-def get_storage(path=None, **opts):
+def get_storage(path=None, name='Experiment', **opts):
     if not path:
         path = conf.storage['path']
         _opts = deepcopy(conf.storage['options'])
@@ -23,7 +23,7 @@ def get_storage(path=None, **opts):
         return get_storage._cache[path]
 
     Storage = utils.import_path(path)
-    get_storage._cache[path] = Storage(**opts)
+    get_storage._cache[path] = Storage(name, **opts)
     return get_storage._cache[path]
 get_storage._cache = {}
 
