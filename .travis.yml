@@ -10,6 +10,9 @@ python:
   - "3.3"
   - "3.4"
 
+services:
+  - redis-server
+
 install:
   - python setup.py develop
   - pip install -r test_requirements.txt

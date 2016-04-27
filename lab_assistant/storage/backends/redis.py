@@ -15,3 +15,25 @@ class RedisBackend(StorageBackend):
     @cached_property
     def conn(self):
         return StrictRedis.from_url(self.kwargs['connection_uri'])
+
+    @property
+    def _key(self):
+        return 'results:%s' % self.experiment_key
+
+    def _retrieve(self, key):
+        val = self.conn.zrangebyscore(self._key, key, key)
+        if val:
+            return val[0]
+        return None
+
+    def _persist(self, key, result):
+        self.conn.zadd(self._key, key, result)
+
+    def _retrieve_all(self):
+        return self.conn.zrevrange(self._key, 0, -1)
+
+    def remove(self, key):
+        self.conn.zremrangebyscore(self._key, key, key)
+
+    def clear(self):
+        self.conn.zremrangebyrank(self._key, 0, -1)
