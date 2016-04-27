@@ -1,6 +1,7 @@
 from copy import deepcopy
 import pickle
-import uuid
+
+from simpleflake import simpleflake
 
 from lab_assistant import conf, utils
 
@@ -30,7 +31,7 @@ get_storage._cache = {}
 
 def store(result, storage=None):
     storage = storage or get_storage()
-    key = str(uuid.uuid4)
+    key = simpleflake()
     return storage.set(key, pickle.dumps(result))
 
 
