@@ -10,6 +10,8 @@ __all__ = [
     'get_storage',
     'store',
     'retrieve',
+    'retrieve_all',
+    'clear',
 ]
 
 
@@ -32,11 +34,22 @@ get_storage._cache = {}
 def store(result, storage=None):
     storage = storage or get_storage()
     key = simpleflake()
-    return storage.set(key, pickle.dumps(result))
+    storage.set(key, result)
+    return key
 
 
 def retrieve(key, storage=None):
     storage = storage or get_storage()
-    result = storage.get(key)
-    if result:
-        return pickle.loads(result)
+    return storage.get(key)
+
+
+def retrieve_all(storage=None):
+    return (storage or get_storage()).list()
+
+
+def remove(key, storage=None):
+    (storage or get_storage()).remove(key)
+
+
+def clear(storage=None):
+    return (storage or get_storage()).clear()

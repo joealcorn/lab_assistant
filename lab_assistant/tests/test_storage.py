@@ -65,3 +65,14 @@ class TestRedisBackend(cases.RedisTestCase):
         assert list(storage.list()) == ['fake_result']
         storage.clear()
         assert list(storage.list()) == []
+
+    def test_public_api(self):
+        storage = self.storage()
+        lab_assistant.storage.store('first', storage)
+        key = lab_assistant.storage.store('second', storage)
+        assert lab_assistant.storage.retrieve(key, storage) == 'second'
+        assert len(list(lab_assistant.storage.retrieve_all(storage))) == 2
+        lab_assistant.storage.remove(key, storage)
+        assert len(list(lab_assistant.storage.retrieve_all(storage))) == 1
+        lab_assistant.storage.clear(storage)
+        assert list(lab_assistant.storage.retrieve_all(storage)) == []
