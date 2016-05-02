@@ -18,7 +18,7 @@ __all__ = [
 def get_storage(path=None, name='Experiment', **opts):
     if not path:
         path = conf.storage['path']
-        _opts = deepcopy(conf.storage['options'])
+        _opts = deepcopy(conf.storage.get('options', {}))
         _opts.update(opts)
         opts = _opts
 
