@@ -1,5 +1,9 @@
+from logging import getLogger
+
 import laboratory
 from lab_assistant import tasks
+
+logger = getLogger(__name__)
 
 
 class Experiment(laboratory.Experiment):

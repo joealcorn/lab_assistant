@@ -1,5 +1,4 @@
 from copy import deepcopy
-import pickle
 
 from simpleflake import simpleflake
 
