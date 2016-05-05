@@ -16,6 +16,6 @@ class Experiment(laboratory.Experiment):
         for task in self.publish_tasks:
             try:
                 task(result)
-            except Exception, e:
+            except Exception as e:
                 logger.exception(e)
         return super(Experiment, self).publish(result)
