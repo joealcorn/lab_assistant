@@ -31,7 +31,7 @@ get_storage._cache = {}
 
 
 def store(result, storage=None):
-    storage = storage or get_storage()
+    storage = storage or get_storage(name=result.experiment.name)
     key = simpleflake()
     storage.set(key, result)
     return key
