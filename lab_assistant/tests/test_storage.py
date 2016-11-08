@@ -9,6 +9,14 @@ class FakeStorage(StorageBackend):
     pass
 
 
+class FakeResult(object):
+    def __init__(self, value):
+        self.experiment = None
+        self.control = None
+        self.observations = None
+        self.value = value
+
+
 class TestGetStorage(cases.TestCase):
     def test_get_default_storage(self):
         storage = lab_assistant.storage.get_storage()
@@ -68,11 +76,12 @@ class TestRedisBackend(cases.RedisTestCase):
 
     def test_public_api(self):
         storage = self.storage()
-        lab_assistant.storage.store('first', storage)
-        key = lab_assistant.storage.store('second', storage)
-        assert lab_assistant.storage.retrieve(key, storage) == 'second'
-        assert len(list(lab_assistant.storage.retrieve_all(storage))) == 2
+        lab_assistant.storage.store(FakeResult(value=1), storage)
+        key = lab_assistant.storage.store(FakeResult(value=2), storage)
+
+        assert lab_assistant.storage.retrieve(key, storage).value == 2
+        assert len(list(lab_assistant.storage.retrieve_many(storage))) == 2
         lab_assistant.storage.remove(key, storage)
-        assert len(list(lab_assistant.storage.retrieve_all(storage))) == 1
+        assert len(list(lab_assistant.storage.retrieve_many(storage))) == 1
         lab_assistant.storage.clear(storage)
-        assert list(lab_assistant.storage.retrieve_all(storage)) == []
+        assert list(lab_assistant.storage.retrieve_many(storage)) == []

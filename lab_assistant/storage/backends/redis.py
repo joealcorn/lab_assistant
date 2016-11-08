@@ -28,8 +28,10 @@ class RedisBackend(StorageBackend):
     def _persist(self, key, result):
         self.conn.zadd(self._key, key, result)
 
-    def _retrieve_all(self):
-        return self.conn.zrevrange(self._key, 0, -1)
+    def _retrieve_many(self, limit):
+        if limit is None or limit is 0:
+            limit = -1
+        return self.conn.zrevrange(self._key, 0, limit)
 
     def remove(self, key):
         self.conn.zremrangebyscore(self._key, key, key)

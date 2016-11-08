@@ -10,7 +10,7 @@ __all__ = [
     'get_storage',
     'store',
     'retrieve',
-    'retrieve_all',
+    'retrieve_many',
     'clear',
 ]
 
@@ -37,6 +37,7 @@ get_storage._cache = defaultdict(dict)
 def store(result, storage=None):
     storage = storage or get_storage(name=result.experiment.name)
     key = simpleflake()
+    result.id = key
     storage.set(key, result)
     return key
 
@@ -46,8 +47,8 @@ def retrieve(key, storage=None):
     return storage.get(key)
 
 
-def retrieve_all(storage=None):
-    return (storage or get_storage()).list()
+def retrieve_many(storage=None, limit=25):
+    return (storage or get_storage()).list(limit)
 
 
 def remove(key, storage=None):

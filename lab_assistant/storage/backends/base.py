@@ -34,11 +34,11 @@ class StorageBackend(object):
         '''
         self._persist(key, self.serialize(result))
 
-    def list(self):
+    def list(self, limit=25):
         '''
         Returns a generator of all results
         '''
-        return (self.deserialize(r) for r in self._retrieve_all())
+        return (self.deserialize(r) for r in self._retrieve_many(limit))
 
     # All methods below should be implemented by subclasses
 
@@ -54,7 +54,7 @@ class StorageBackend(object):
         '''
         raise NotImplementedError
 
-    def _retrieve_all(self):
+    def _retrieve_many(self, limit):
         '''
         Retrieves a list of the serialized form of all results
         '''

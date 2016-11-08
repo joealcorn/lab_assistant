@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab Assistant</title>
+    <style type="text/css">
+        .result-overview {
+            margin: 10px;
+            padding: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+    <script type='application/javascript' src='{% static "lab_assistant/external/jsondiffpatch.min.js" %}'></script>
+    <script type='application/javascript' src='{% static "lab_assistant/external/jsondiffpatch-formatters.min.js" %}'></script>
+    <link rel='stylesheet' href='{% static "lab_assistant/external/jsondiffpatch.html.css" %}' type='text/css'/>
+    {% block script %}{% endblock %}
+</html>

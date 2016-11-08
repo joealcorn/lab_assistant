@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+    Results:
+    <ul>
+    {% for result in results %}
+        <li class='result'>{% include 'result_overview.html' %}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.result').each(function(index, el) {
+            var $el = $(el);
+            var control = JSON.parse($el.find('[data-control=True]').text());
+            var observations = $el.find('[data-control=False]').map(function(event, element) {
+                return JSON.parse(element.innerHTML);
+            });
+
+            var deltas = $(observations).map(function(index, obs) {
+                console.log(control.value, obs.value);
+                return jsondiffpatch.diff({value: control.value}, {value: obs.value});
+            });
+
+            $el.find('.comparison').each(function(index, el) {
+                var diff = jsondiffpatch.formatters.html.format(deltas[index], {value: control.value});
+                $(el).html(diff);
+            });
+        });
+    });
+</script>
+{% endblock %}
