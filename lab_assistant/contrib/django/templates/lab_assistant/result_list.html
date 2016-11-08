@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'lab_assistant/base.html' %}
 {% block content %}
     Results:
     <ul>
     {% for result in results %}
-        <li class='result'>{% include 'result_overview.html' %}</li>
+        <li class='result'>{% include 'lab_assistant/result_overview.html' %}</li>
     {% endfor %}
     </ul>
 

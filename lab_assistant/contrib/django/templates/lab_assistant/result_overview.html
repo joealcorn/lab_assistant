@@ -1,11 +1,11 @@
 <div class='result-overview expand' data-result-id='{{ result.id }}'>
     <a href="{% url 'specific_mismatch' result.id %}">{{ result.id }}</a>
 
-    {% include 'observation.html' with observation=result.control control=True %}
+    {% include 'lab_assistant/observation.html' with observation=result.control control=True %}
 
     {% for observation in result.observations %}
         <br>
-        {% include 'observation.html' %}
+        {% include 'lab_assistant/observation.html' %}
         <div class="comparison"></div>
     {% endfor %}
 </div>

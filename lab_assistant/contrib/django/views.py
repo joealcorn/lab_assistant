@@ -9,11 +9,11 @@ from lab_assistant.storage import get_storage
 def mismatch_list(request):
     name = request.GET.get('name')
     if not name:
-        return render(request, 'pick_experiment.html')
+        return render(request, 'lab_assistant/pick_experiment.html')
 
     storage = get_storage(name=name)
     results = storage.list()
-    return render(request, 'result_list.html', {
+    return render(request, 'lab_assistant/result_list.html', {
         'results': results,
     })
 
