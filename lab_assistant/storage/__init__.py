@@ -1,4 +1,5 @@
 from copy import deepcopy
+from collections import defaultdict
 
 from simpleflake import simpleflake
 
@@ -22,12 +23,15 @@ def get_storage(path=None, name='Experiment', **opts):
         opts = _opts
 
     if path in get_storage._cache:
-        return get_storage._cache[path]
+        if name in get_storage._cache[path]:
+            return get_storage._cache[path][name]
 
     Storage = utils.import_path(path)
-    get_storage._cache[path] = Storage(name, **opts)
-    return get_storage._cache[path]
-get_storage._cache = {}
+    get_storage._cache[path].update({
+        name: Storage(name, **opts)
+    })
+    return get_storage._cache[path][name]
+get_storage._cache = defaultdict(dict)
 
 
 def store(result, storage=None):
