@@ -1,6 +1,8 @@
+from datetime import datetime
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from django.http import HttpResponse
+from simpleflake import parse_simpleflake
 
 from lab_assistant.storage import get_storage
 
@@ -13,6 +15,9 @@ def mismatch_list(request):
 
     storage = get_storage(name=name)
     results = storage.list()
+    for result in results:
+        result.timestamp = datetime.fromtimestamp(parse_simpleflake(result.key).timestamp).isoformat()
+
     return render(request, 'lab_assistant/result_list.html', {
         'results': results,
     })

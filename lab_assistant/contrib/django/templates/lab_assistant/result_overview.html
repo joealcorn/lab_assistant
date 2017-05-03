@@ -1,5 +1,5 @@
 <div class='result-overview expand' data-result-id='{{ result.id }}'>
-    <a href="{% url 'specific_mismatch' result.id %}">{{ result.id }}</a>
+    <a href="{% url 'specific_mismatch' result.id %}">{{ result.id }} {{ result.timestamp }}</a>
 
     {% include 'lab_assistant/observation.html' with observation=result.control control=True %}
 
