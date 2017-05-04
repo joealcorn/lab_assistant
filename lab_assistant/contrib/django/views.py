@@ -16,7 +16,7 @@ def mismatch_list(request):
     storage = get_storage(name=name)
     results = storage.list()
     for result in results:
-        result.timestamp = datetime.fromtimestamp(parse_simpleflake(result.key).timestamp).isoformat()
+        result.timestamp = datetime.fromtimestamp(parse_simpleflake(result.id).timestamp).isoformat()
 
     return render(request, 'lab_assistant/result_list.html', {
         'results': results,
