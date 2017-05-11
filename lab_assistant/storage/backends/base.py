@@ -36,9 +36,9 @@ class StorageBackend(object):
 
     def list(self, limit=25):
         '''
-        Returns a generator of all results
+        Returns a list of all results
         '''
-        return (self.deserialize(r) for r in self._retrieve_many(limit))
+        return [self.deserialize(r) for r in self._retrieve_many(limit)]
 
     # All methods below should be implemented by subclasses
 
