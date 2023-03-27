@@ -1,5 +1,5 @@
 exam==0.10.5
 laboratory==0.3.0
 pytest==2.9.1
-redis==2.10.5
+redis==4.5.3
 simpleflake==0.1.5
